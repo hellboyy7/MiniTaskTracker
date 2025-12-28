@@ -11,8 +11,10 @@ function App() {
   const { tasks, loading, actions, state } = useTaskManager();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [opens, setOpens] = useState(false);
+  const [open, setOpen] = useState({
+    filter: false,
+    sort: false,
+  });
 
   const OPTIONS = [
     { value: "All", label: "All Status" },
@@ -69,7 +71,13 @@ function App() {
           <div className="flex gap-2 justify-between">
             <div className="relative">
               <div
-                onClick={() => setOpen(!open)}
+                onClick={() =>
+                  setOpen((prev) => ({
+                    ...prev,
+                    filter: !prev.filter,
+                    sort: false,
+                  }))
+                }
                 className="flex items-center gap-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-100 transition"
               >
                 <CiFilter size={20} className="text-gray-500" />
@@ -78,7 +86,7 @@ function App() {
                 </span>
               </div>
 
-              {open && (
+              {open.filter && (
                 <ul className="absolute mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                   {OPTIONS.map((opt) => (
                     <li
@@ -86,7 +94,11 @@ function App() {
                       onClick={() => {
                         // state.filter(opt.value);
                         actions.setFilter(opt.value);
-                        setOpen(false);
+                        setOpen((prev) => ({
+                          ...prev,
+                          filter: !prev.filter,
+                          sort: false,
+                        }));
                       }}
                       className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
                     >
@@ -99,7 +111,13 @@ function App() {
 
             <div className="relative group">
               <div
-                onClick={() => setOpens(!opens)}
+                onClick={() =>
+                  setOpen((prev) => ({
+                    ...prev,
+                    sort: !prev.sort,
+                    filter: false,
+                  }))
+                }
                 className="flex items-center gap-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-100 transition"
               >
                 <LuArrowUpDown size={17} className="text-gray-500" />
@@ -107,14 +125,18 @@ function App() {
                   {DateOptions.find((o) => o.value === state.sort)?.label}
                 </span>
               </div>
-              {opens && (
+              {open.sort && (
                 <ul className="absolute mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                   {DateOptions.map((opt) => (
                     <li
                       key={opt.value}
                       onClick={() => {
                         actions.setSort(opt.value);
-                        setOpens(false);
+                        setOpen((prev) => ({
+                          ...prev,
+                          sort: !prev.sort,
+                          filter: false, // optional
+                        }));
                       }}
                       className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
                     >
