@@ -13,13 +13,13 @@ export function useTaskManager() {
 
   // Load initial data
   useEffect(() => {
-    loadTasks();
     async function loadTasks() {
       setLoading(true);
       const data = await taskApi.fetchTasks();
       setTasks(data);
       setLoading(false);
     }
+    loadTasks();
   }, []);
 
   const addTask = async (taskData) => {

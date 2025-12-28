@@ -138,9 +138,9 @@ function App() {
         <div className="space-y-3">
           {loading ? (
             <div className="text-center py-10 text-gray-400">
-              <div class="relative flex justify-center ">
-                <div class="w-12 h-12 rounded-full absolute border border-solid border-gray-200"></div>
-                <div class="w-12 h-12 rounded-full animate-spin absolute border border-solid border-cyan-500 border-t-transparent"></div>
+              <div className="relative flex justify-center ">
+                <div className="w-12 h-12 rounded-full absolute border border-solid border-gray-200"></div>
+                <div className="w-12 h-12 rounded-full animate-spin absolute border border-solid border-cyan-500 border-t-transparent"></div>
               </div>
             </div>
           ) : tasks.length === 0 ? (
